@@ -9,7 +9,7 @@ import ConvertDialog from "../common/dialog/ConvertDialog";
 import FileNameDialog from "../common/dialog/FileNameDialog";
 import TextEditorPro from "../common/text_editor_pro";
 import ExplorerTree from "./explorer_tree"
-import ImageViewerOne from "haru-reactjs-component-imageViewer";
+import ImageViewer from "haru-reactjs-component-imageViewer";
 
 
 import { 
@@ -340,7 +340,7 @@ function Explorer(){
       //   "/Users/developer/T9/travels/processed/174-alison/jpeg/20251207_121220.jpeg",
       // ];
       return (
-        <ImageViewerOne 
+        <ImageViewer 
           name={image_data.name}
           parent={image_data.parent}
           list={image_data.list}
