@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import ServerDownload from "../../server_download";
+import ServerDownload from "./server_download";
 
 const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_url }) => {
   const [progress,setProgress] = useState(0);

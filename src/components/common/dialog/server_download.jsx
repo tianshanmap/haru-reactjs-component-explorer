@@ -1,7 +1,7 @@
 
 import { 
         download_chunk,
-      } from "./api/utils";
+      } from "../../api/utils";
 import styles from "./server_download.module.css";
 const ServerDownload = ({name,remote_url,onConfirm,onProgress}) => {
 

@@ -1,7 +1,7 @@
 import './App.css'
 import Header from './components/header.jsx'
 import Footer from './components/footer.jsx'
-import Explorer from './components/explorer/explorer.jsx'
+import Explorer from './explorer.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const FileExplorer = () => {

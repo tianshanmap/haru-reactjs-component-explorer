@@ -1,13 +1,13 @@
 import { useState,useEffect} from "react"
 import styles from "./explorer.module.css"
-import ConfirmationDialog from "../common/dialog/ConfirmationDialog";
-import MoveCopyDialog from "../common/dialog/MoveCopyDialog";
-import UploadDialog from "../common/dialog/UploadDialog";
-import DownloadDialog from "../common/dialog/DownloadDialog";
-import CreateDialog from "../common/dialog/CreateDialog";
-import ConvertDialog from "../common/dialog/ConvertDialog";
-import FileNameDialog from "../common/dialog/FileNameDialog";
-import TextEditorPro from "../common/text_editor_pro";
+import ConfirmationDialog from "./components/common/dialog/ConfirmationDialog";
+import MoveCopyDialog from "./components/common/dialog/MoveCopyDialog";
+import UploadDialog from "./components/common/dialog/UploadDialog";
+import DownloadDialog from "./components/common/dialog/DownloadDialog";
+import CreateDialog from "./components/common/dialog/CreateDialog";
+import ConvertDialog from "./components/common/dialog/ConvertDialog";
+import FileNameDialog from "./components/common/dialog/FileNameDialog";
+import TextEditorPro from "./components/common/text_editor_pro";
 import ExplorerTree from "./explorer_tree"
 import ImageViewer from "haru-reactjs-component-imageViewer";
 
@@ -22,8 +22,8 @@ import {
         getMoveEndPoint,
         getCreateEndPoint,
         convertMtsToMp4,
-      } from "../api/api_service_8080";
-import { getDownloadEndPoint } from "../api/api_service_8081";
+      } from "./components/api/api_service_8080";
+import { getDownloadEndPoint } from "./components/api/api_service_8081";
 
 var image_data = {
         "name":"",

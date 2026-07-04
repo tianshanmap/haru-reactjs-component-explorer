@@ -1,5 +1,5 @@
 
-import PathSelect from "../../PathSelect";
+import PathSelect from "./PathSelect";
 const MoveCopyDialog = ({ isOpen, title, message, onConfirm, onCancel, onPathSelect }) => {
   if (!isOpen) return null;
   console.log("PathSelect::onPathSelect=" + onPathSelect);
