@@ -1,5 +1,5 @@
 
-import FileUploadForm from "../../file_upload";
+import ChunkedUploader from "../file_upload_chunk";
 
 const UploadDialog = ({ isOpen, title, message, onCancel,onConfirm,name,remote_url }) => {
   if (!isOpen) return null;
@@ -10,7 +10,7 @@ const UploadDialog = ({ isOpen, title, message, onCancel,onConfirm,name,remote_u
         <p>{message}</p>
         <p>{remote_url}</p>
         <div style={styles.actions}>
-          <FileUploadForm name={name} remote_url={remote_url} onConfirm={onConfirm}/>
+          <ChunkedUploader name={name} onComplete={onConfirm} accept_type="*"/>
           <button onClick={onCancel} style={styles.cancelBtn}>
             Cancel
           </button>

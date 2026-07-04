@@ -15,13 +15,17 @@ const callRemote = async (remote_url) => {
 }  
 
 const uploadFileInChunks = async (file,targetPath,setProgress) => {
-
+    console.log("uploadFileInChunks-started");
     const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+    console.log("uploadFileInChunks-totalChunks=" + totalChunks);
     const fileId = `${Date.now()}-${file.name}`;
+    console.log("uploadFileInChunks-fileId=" + fileId);
 
     for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
       const start = chunkIndex * CHUNK_SIZE;
       const end = Math.min(start + CHUNK_SIZE, file.size);
+      console.log("uploadFileInChunks-start=" + start);
+      console.log("uploadFileInChunks-end=" + end);
       
       // Slice file using Blob.slice()
       const chunk = file.slice(start, end);
@@ -32,6 +36,7 @@ const uploadFileInChunks = async (file,targetPath,setProgress) => {
       formData.append('totalChunks', totalChunks.toString());
       formData.append('fileChunk', chunk);
 
+      console.log("uploadFileInChunks-url==" + API_BASE_URL_8081 + '/filesystem/upload_chunk');
       await fetch(API_BASE_URL_8081 + '/filesystem/upload_chunk', {
         method: 'POST',
         body: formData,

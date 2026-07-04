@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import styles from './file_upload_form.module.css';
+import styles from './file_upload_chunk.module.css';
 
 import {
   chunkUpload,
@@ -8,7 +8,7 @@ import {
 } from "../api/api_service_8081";
 
 // Simplified implementation based on
-export default function ChunkedUploader({title,name,onComplete,accept_type}) {
+export default function ChunkedUploader({name,onComplete,accept_type}) {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -34,23 +34,18 @@ export default function ChunkedUploader({title,name,onComplete,accept_type}) {
   };
 
   return (
-    <div className={styles.upload_form_container}>
-      <h3>{title}</h3>
-      <table className={styles.upload_form_table}>
-        <tbody>
-          <tr>
-            <td>File to upload</td>
-            <td><input type="file" onChange={handleFileChange} accept={accept_type}/></td>
-          </tr>
-          <tr>
-            <td>Upload Progress</td>
-            <td><progress value={progress} max="100" width="100%" /> ({progress}%) </td>
-          </tr>
-          <tr>
-            <td colspan="2"><button className={styles.upload_form_button} onClick={uploadFileInChunks} disabled={!file || isUploading}>Upload</button></td>
-          </tr>
-        </tbody>        
-      </table>
+    <div className={styles.upload_chunk_container}>
+      <div>File to upload</div>
+      <div><input type="file" onChange={handleFileChange} accept={accept_type}/></div>
+      <div>Upload Progress</div>
+      <div><progress value={progress} max="100" width="100%" /> ({progress}%) </div>
+      <div></div>
+      <div>
+        <button className={styles.upload_chunk_button} 
+                onClick={uploadFileInChunks} disabled={!file || isUploading}>
+                  Upload
+        </button>
+      </div>  
     </div>
   );
 }
