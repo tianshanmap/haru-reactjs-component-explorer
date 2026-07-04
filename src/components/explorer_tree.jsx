@@ -1,7 +1,7 @@
 import styles from "./explorer_tree.module.css"
 import { 
         bytesToMB,
-      } from "./components/api/utils";
+      } from "./api/utils";
 
 function ExplorerTree({data,
                       list,

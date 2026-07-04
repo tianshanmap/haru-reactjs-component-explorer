@@ -8,7 +8,7 @@ import CreateDialog from "./components/common/dialog/CreateDialog";
 import ConvertDialog from "./components/common/dialog/ConvertDialog";
 import FileNameDialog from "./components/common/dialog/FileNameDialog";
 import TextEditorPro from "./components/common/text_editor_pro";
-import ExplorerTree from "./explorer_tree"
+import ExplorerTree from "./components/explorer_tree"
 import ImageViewer from "haru-reactjs-component-imageViewer";
 
 
