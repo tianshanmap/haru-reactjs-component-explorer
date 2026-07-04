@@ -1,0 +1,40 @@
+.audio_profile_container {
+  display: flex;
+  justify-content: center;
+  background-color: white; 
+  border-color:rgb(0, 128, 255);;
+  border-style:none;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.audio_table {
+  background-color: white; 
+  border-style: none;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 50px 50px 70px rgba(12, 0, 0, 0.9);
+}
+
+.audio_table tr {
+  border-style: none;
+}
+
+.audio_button {
+  background-color: rgb(89, 89, 176);
+  border-radius: 5px;
+  color: white;
+}
+.audio_button:hover {
+  background-color: rgb(17, 17, 18);
+  border-radius: 15px;
+  color: rgb(193, 190, 190);
+}
+.video_player {
+  display: flex;
+  justify-content: column;
+  margin-top:20px;
+  margin-bottom: 20px;
+}

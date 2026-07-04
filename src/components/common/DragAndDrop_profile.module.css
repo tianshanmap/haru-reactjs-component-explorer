@@ -1,0 +1,101 @@
+.drag_drop_top_container {
+  display: flex;
+  flex-direction: column;       /* Allows items to move to a new line when out of space */
+}
+.drag_drop_command {
+  display: flex;
+  
+}
+.drag_drop_button {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: medium;
+  background-color: rgb(196, 217, 241);
+  margin-top: 5px;
+}
+.drag_drop_button:hover {
+  background-color: rgb(133, 140, 147);
+}
+
+.drag_drop_container {
+  display: flex;
+  flex-direction: row;       /* Allows items to move to a new line when out of space */
+  gap: 16px;             /* Creates spacing between rows and columns */
+  padding: 1px;
+  background-color: rgb(187, 117, 117);
+  border-style: solid;
+  border-width: 2px;
+}
+
+.drag_drop_container1 {
+  position: relative;        /* Required: Acts as an anchor for the title */
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;       /* Allows items to move to a new line when out of space */
+  justify-content: center;
+  gap: 1px;             /* Creates spacing between rows and columns */
+  padding: 20px;
+  background-color: rgb(243, 245, 241);
+  border-style: solid;
+  border-width: 2px;
+  border-color: red;
+  min-height: 0;
+}
+.drag_drop_container2 {
+  position: relative;        /* Required: Acts as an anchor for the title */
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;       /* Allows items to move to a new line when out of space */
+  justify-content: start;
+  gap: 1px;             /* Creates spacing between rows and columns */
+  padding: 20px;
+  background-color: rgb(218, 211, 211);
+  border-style: solid;
+  border-width: 2px;
+  overflow-y: auto;
+  min-height: 0;
+}
+.drag_drop_item {
+  display : flex;
+  flex-wrap: wrap;       /* Allows items to move to a new line when out of space */
+  align-items: start;
+  padding: 20px;
+  margin: 10px 0;
+  background-color: white;
+  border-style: solid;
+  border-radius: 30px;
+  cursor: grab;
+  box-shadow: '0 1px 3px rgba(0,0,0,0.1)';
+  width: 100px;
+  height: 50px;
+  gap: 1px;
+}
+.drag_and_drop_img {
+  flex: 1;
+  width: 100%;
+}
+
+.drag_and_drop_img:hover {
+  cursor: pointer;
+  border-style: none;
+  border-color: rgb(219, 9, 27);
+  box-shadow: 5px 5px 5px 2px rgba(111, 37, 53, 0.2);
+  width: 300px;
+}
+
+.corner_title {
+    position: absolute;       /* Pulls element out of regular document flow */
+    top: 0px;                /* Distance from the container's top edge */
+    left: 0px;               /* Distance from the container's left edge */
+    margin: 0;                /* Removes default heading margins */
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Regular inner content */
+.content-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}

@@ -1,0 +1,33 @@
+.text_editor_parent {
+  display: block;
+  justify-content: center;
+  background-color: white; 
+  border-color:rgb(0, 128, 255);;
+  border-style:none;
+  padding: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  box-shadow: 50px 50px 70px rgba(12, 0, 0, 0.9);
+  height: 100%;
+}
+.text_editor_tools {
+  display: flex;
+  justify-content: end;
+  flex: 1;
+  gap: 5px;
+}  
+.text_editor_tools button {
+  background-color: rgb(143, 134, 134);
+  color: white
+}  
+
+.text_editor_tools button:hover {
+  background-color: rgb(178, 72, 72);
+  color: white
+}  
+
+.text_editor_container {
+  flex: 1;
+}
