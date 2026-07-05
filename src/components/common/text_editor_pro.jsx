@@ -7,10 +7,8 @@ import "@blocknote/mantine/style.css";
 // Include the included Inter font
 import "@blocknote/core/fonts/inter.css";
 import styles from "./text_editor_pro.module.css";
-import { 
-        saveNotes,
-        getNotes,
-      } from "../api/api_service_8080";
+
+import api from 'haru-service-api';
 
 import { PDFExporter, pdfDefaultSchemaMappings } from "@blocknote/xl-pdf-exporter";
 import * as ReactPDF from "@react-pdf/renderer";      
@@ -25,7 +23,7 @@ export default function TextEditorPro({isExisting,name,parent,onExit,onSave}) {
     // 1. Declare the async function inside the effect
     const fetchData = async () => {
       if (isExisting){
-        const saved = await getNotes(name);
+        const saved = await api.getNotes(name);
         if (saved) {
           const blocks = JSON.parse(saved);
           editor.replaceBlocks(editor.document, blocks);
@@ -42,13 +40,14 @@ export default function TextEditorPro({isExisting,name,parent,onExit,onSave}) {
   const saveContent = async () => {
     const jsonBlocks = JSON.stringify(editor.document);
     localStorage.setItem("editorContent", jsonBlocks);
-    let request = {
+    const request = {
       "file_path": name,
       "content": jsonBlocks,
       "created_by": "neil",
     };
+    console.log("saveContent,request=" + JSON.stringify(request));
     try {
-         const data = await saveNotes(request); // Parse the server response
+         const data = await api.saveNotes(request); // Parse the server response
          console.log(data);
     } catch (error) {
          console.error('Error:', error);

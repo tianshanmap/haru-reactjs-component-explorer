@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import ServerDownload from "./server_download";
 
-const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_url }) => {
+const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name }) => {
   const [progress,setProgress] = useState(0);
   if (!isOpen) return null;
 
@@ -19,10 +19,9 @@ const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_
       <div style={styles.modal}>
         <h3>{title}</h3>
         <p>{message}</p>
-        <p>{remote_url}</p>
         <p>Progress : {progress}</p>
         <div style={styles.actions}>
-          <ServerDownload name={name} remote_url={remote_url} onConfirm={handleConfirm} onProgress={handleProgress}/>
+          <ServerDownload name={name} onConfirm={handleConfirm} onProgress={handleProgress}/>
           <button onClick={onCancel} style={styles.cancelBtn}>
             Cancel
           </button>
@@ -49,7 +48,7 @@ const styles = {
     borderRadius: '8px',
     maxWidth: '800px',
     width: '100%',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+    boxShadow: '50 50px 70px rgba(12, 0, 0, 0.9)',
   },
   actions: {
     display: 'flex',

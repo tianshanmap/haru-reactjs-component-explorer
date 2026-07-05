@@ -1,12 +1,11 @@
 
-import { 
-        download_chunk,
-      } from "../../api/utils";
+import api from 'haru-service-api';
 import styles from "./server_download.module.css";
-const ServerDownload = ({name,remote_url,onConfirm,onProgress}) => {
+
+const ServerDownload = ({name,onConfirm,onProgress}) => {
 
   const downloadFileInChunks = async() => {
-    await download_chunk(name,remote_url,onProgress);
+    await api.download_chunk(name,onProgress);
     onConfirm();
   }
 

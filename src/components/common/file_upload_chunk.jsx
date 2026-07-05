@@ -2,10 +2,7 @@ import { useState } from 'react';
 
 import styles from './file_upload_chunk.module.css';
 
-import {
-  chunkUpload,
-  unzip
-} from "../api/api_service_8081";
+import api from 'haru-service-api';
 
 // Simplified implementation based on
 export default function ChunkedUploader({name,onComplete,accept_type}) {
@@ -21,16 +18,16 @@ export default function ChunkedUploader({name,onComplete,accept_type}) {
     if (!file) return;
 
     setIsUploading(true);
-    const fileId = await chunkUpload(file,name,setProgress);
+    const fileId = await api.uploadFileInChunks(file,name,setProgress);
     console.log("uploadFileInChunks::fileId=" + fileId + ",json=" + JSON.stringify(fileId));
     setIsUploading(false);
-    try {
-        const data = await unzip(fileId,name);
-        console.log("data.files=" + JSON.stringify(data));
-        onComplete(data);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
+    // try {
+    //     const data = await unzip(fileId,name);
+    //     console.log("data.files=" + JSON.stringify(data));
+    //     onComplete(data);
+    // } catch (error) {
+    //     console.error("Error fetching data:", error);
+    // }
   };
 
   return (

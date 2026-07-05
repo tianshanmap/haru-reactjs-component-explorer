@@ -21,6 +21,7 @@
     "@react-keycloak/web": "^3.4.0",
     "@react-pdf/renderer": "^4.5.1",
     "haru-reactjs-component-imageViewer": "github:tianshanmap/haru-reactjs-component-imageViewer",
+    "haru-service-api": "github:tianshanmap/haru-service-api",
     "keycloak-js": "^26.2.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
