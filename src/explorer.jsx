@@ -10,6 +10,7 @@ import FileNameDialog from "./components/common/dialog/FileNameDialog";
 import TextEditorPro from "./components/common/text_editor_pro";
 import ExplorerTree from "./components/explorer_tree"
 import ImageViewer from "haru-reactjs-component-imageViewer";
+import UnzipDialog from "./components/common/dialog/UnzipDialog";
 
 import api from 'haru-service-api';
 
@@ -40,6 +41,7 @@ function Explorer(){
     const [targetMoveCopyPath, setTargetMoveCopyPath] = useState("");
     const [isExistingNotes,setIsExistingNotes] = useState(true);
     const [isFileNameDialogOpen,setIsFileNameDialogOpen] = useState(false);
+    const [isUnzipDialogOpen,setIsUnzipDialogOpen] = useState(false);
 
     useEffect(() => {
       // 1. Declare the inner async function
@@ -171,6 +173,13 @@ function Explorer(){
         // setFlow("delete")
         setParent(parentname);
     }
+    function handleUnzip(event){
+        setIsUnzipDialogOpen(true);
+        setMessage("Are you sure to unzip " + event.target.getAttribute("name") + "?");
+        setCurrent(event.target.getAttribute("name"));
+        var parentname = event.target.getAttribute("parent");
+        setParent(parentname);
+    }
 
     const handleDeleteDialogConfirm = async () => {
       setIsDialogOpen(false);
@@ -232,6 +241,15 @@ function Explorer(){
       setIsExistingNotes(false);
       setFlow("notes");
     };
+    const handleUnzipConfirm = async () => {
+      setIsUnzipDialogOpen(false);
+      const data = await api.unzip(current,targetMoveCopyPath);
+      const folder = data.targetPath;
+      const folder_data = await api.getDirectory(folder);
+      setData(folder_data);
+      setList(folder_data.files);
+      setFlow("");
+    };
 
     
     const handleDialogCancel = () => {
@@ -264,6 +282,10 @@ function Explorer(){
     };
     const onCancelNotesDialog = () => {
       setIsFileNameDialogOpen(false);
+      console.log("Action Cancelled.");
+    };
+    const onCancelUnzipDialog = () => {
+      setIsUnzipDialogOpen(false);
       console.log("Action Cancelled.");
     };
     
@@ -370,6 +392,7 @@ function Explorer(){
               handleNewNotes={handleNewNotes}
               handleView={handleView}
               handleConvert={handleConvert}
+              handleUnzip={handleUnzip}
               />
             <ConfirmationDialog 
               isOpen={isDialogOpen} 
@@ -430,6 +453,16 @@ function Explorer(){
                 label="Notes Name : "
                 onConfirm={handleNotesNameConfirm}
                 onCancel={onCancelNotesDialog}
+              />             
+            }
+            {isUnzipDialogOpen &&
+              <UnzipDialog
+                title="Unzip a file"
+                message={message}
+                label="Notes Name : "
+                onConfirm={handleUnzipConfirm}
+                onCancel={onCancelUnzipDialog}
+                onPathSelect={handlePathSelect}
               />             
             }
           </div>

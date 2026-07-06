@@ -15,6 +15,7 @@ function ExplorerTree({data,
                       handleNew,
                       handleNewNotes,
                       handleConvert,
+                      handleUnzip,
                     }){
 
   const totalBytes = () => {
@@ -58,6 +59,15 @@ function ExplorerTree({data,
             <button name={name} parent={parent} onClick={handleMove} className={styles.link_button}>Move</button>&nbsp;&nbsp;
             <button name={name} parent={parent} onClick={handleCopy} className={styles.link_button}>Copy</button>&nbsp;&nbsp;
             <button name={name} parent={parent} onClick={handleDelete} className={styles.link_button}>Delete</button>&nbsp;&nbsp;
+        </td>);
+    } else if (name.endsWith(".zip") || name.endsWith(".tar.gz")) {
+      return(
+        <td>
+            <button name={name} parent={parent} onClick={handleDownload} className={styles.link_button}>Download</button>&nbsp;&nbsp;
+            <button name={name} parent={parent} onClick={handleMove} className={styles.link_button}>Move</button>&nbsp;&nbsp;
+            <button name={name} parent={parent} onClick={handleCopy} className={styles.link_button}>Copy</button>&nbsp;&nbsp;
+            <button name={name} parent={parent} onClick={handleDelete} className={styles.link_button}>Delete</button>&nbsp;&nbsp;
+            <button name={name} parent={parent} onClick={handleUnzip} className={styles.link_button}>Unzip</button>&nbsp;&nbsp;
         </td>);
     } else {
       return(
