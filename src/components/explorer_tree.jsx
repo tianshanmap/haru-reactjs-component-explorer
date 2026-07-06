@@ -2,6 +2,8 @@ import styles from "./explorer_tree.module.css"
 import { 
         bytesToMB,
       } from "./api/utils";
+import gif_folder from '../assets/folder.gif';
+import gif_file from '../assets/file.gif';
 
 function ExplorerTree({data,
                       list,
@@ -119,10 +121,20 @@ function ExplorerTree({data,
             {/* 2. Use .map() to loop through the array and return table rows */}
             {list.map((item) => (
               <tr>
-                {item.kind === 'folder' && <td><a href="#" name={item.path} onClick={handleSelection}>{item.name}</a></td>}
+                {item.kind === 'folder' && 
+                  <td>
+                    <div className={styles.gif_container}>
+                      <img src={gif_folder}/><a href="#" name={item.path} onClick={handleSelection}>{item.name}</a>
+                    </div>
+                  </td>}
                 {item.kind === 'folder' && <td></td>}
                 {item.kind === 'folder' && <td></td>}
-                {item.kind === 'file' && <td>{getFilename(item.name)}</td>}
+                {item.kind === 'file' && 
+                  <td>
+                    <div className={styles.gif_container}>
+                      <img src={gif_file}/>{getFilename(item.name)}
+                    </div>
+                  </td>}
                 {item.kind === 'file' && <td>{bytesToMB(item.size)}</td>}
                 {item.kind === 'file' && <td>{item.last_update}</td>}
                 {item.kind === 'folder' && <td>
