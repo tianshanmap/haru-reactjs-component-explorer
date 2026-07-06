@@ -10,20 +10,9 @@ import FileNameDialog from "./components/common/dialog/FileNameDialog";
 import TextEditorPro from "./components/common/text_editor_pro";
 import ExplorerTree from "./components/explorer_tree"
 import ImageViewer from "haru-reactjs-component-imageViewer";
+import UnzipDialog from "./components/common/dialog/UnzipDialog";
 
-
-import { 
-        getDirectory,
-        getRoot,
-        copy,move,deleteFile, createDirectory,
-        getUploadEndPoint,
-        getViewEndPoint,
-        getDeleteEndPoint,
-        getMoveEndPoint,
-        getCreateEndPoint,
-        convertMtsToMp4,
-      } from "./components/api/api_service_8080";
-import { getDownloadEndPoint } from "./components/api/api_service_8081";
+import api from 'haru-service-api';
 
 var image_data = {
         "name":"",
@@ -52,12 +41,13 @@ function Explorer(){
     const [targetMoveCopyPath, setTargetMoveCopyPath] = useState("");
     const [isExistingNotes,setIsExistingNotes] = useState(true);
     const [isFileNameDialogOpen,setIsFileNameDialogOpen] = useState(false);
+    const [isUnzipDialogOpen,setIsUnzipDialogOpen] = useState(false);
 
     useEffect(() => {
       // 1. Declare the inner async function
       const fetchData = async () => {
         try {
-          const result = await getRoot("/");
+          const result = await api.getRoot("/");
           setData(result);
           setList(result.files);
           console.log(result.files);
@@ -74,7 +64,7 @@ function Explorer(){
       console.log("handleNavigate-name=" + name);
       setFlow("");
       setCurrent(name);
-      const data = await getDirectory(name);
+      const data = await api.getDirectory(name);
       setData(data);
       setList(data.files);
     };    
@@ -106,7 +96,7 @@ function Explorer(){
         setFlow("notes");
       }
       const filename_encoded = filename.replace(/\+/g, '%2B').replace(/\&/g, '%26');
-      setUrl(getViewEndPoint(filename_encoded));        
+      setUrl(api.getViewEndPoint(filename_encoded));        
       console.log("handleView::end::flow=" + flow);
     };
  
@@ -114,7 +104,7 @@ function Explorer(){
         setIsDownloadDialogOpen(true);
         setCurrent(event.target.getAttribute("name"));
         const parentname = event.target.getAttribute("parent");
-        const target_url = getDownloadEndPoint(event.target.getAttribute("name")); 
+        const target_url = api.getDownloadEndPoint(event.target.getAttribute("name")); 
         setUrl(target_url);        
         setMessage("Are you sure to download " + event.target.getAttribute("name") + "?");
         // setFlow("")
@@ -133,7 +123,7 @@ function Explorer(){
         setMessage("Are you sure to upload to folder " + event.target.getAttribute("name") + "?");
         setCurrent(event.target.getAttribute("name"));
         var parentname = event.target.getAttribute("parent");
-        setUrl(getUploadEndPoint());        
+        setUrl(api.getUploadEndPoint());        
         // setFlow("delete")
         setParent(parentname);
         console.log("handleUpload is completed.");
@@ -143,7 +133,7 @@ function Explorer(){
         setMessage("Are you sure to move " + event.target.getAttribute("name") + "?");
         setCurrent(event.target.getAttribute("name"));
         var parentname = event.target.getAttribute("parent");
-        setUrl(getMoveEndPoint(event.target.getAttribute("name"),parentname));        
+        setUrl(api.getMoveEndPoint(event.target.getAttribute("name"),parentname));        
         // setFlow("delete")
         setParent(parentname);
     }
@@ -152,7 +142,7 @@ function Explorer(){
         setMessage("Are you sure to create a new folder under " + event.target.getAttribute("name") + "?");
         setCurrent(event.target.getAttribute("name"));
         var parentname = event.target.getAttribute("parent");
-        setUrl(getCreateEndPoint(event.target.getAttribute("name"),parentname));        
+        setUrl(api.getCreateEndPoint(event.target.getAttribute("name"),parentname));        
         // setFlow("delete")
         setParent(parentname);
     }
@@ -169,7 +159,7 @@ function Explorer(){
         setMessage("Are you sure to convert " + event.target.getAttribute("name") + "?");
         setCurrent(event.target.getAttribute("name"));
         var parentname = event.target.getAttribute("parent");
-        setUrl(getCreateEndPoint(event.target.getAttribute("name"),parentname));        
+        setUrl(api.getCreateEndPoint(event.target.getAttribute("name"),parentname));        
         // setFlow("delete")
         setParent(parentname);
         setIsConvertDialogOpen(true);
@@ -179,22 +169,29 @@ function Explorer(){
         setMessage("Are you sure to delete " + event.target.getAttribute("name") + "?");
         setCurrent(event.target.getAttribute("name"));
         var parentname = event.target.getAttribute("parent");
-        setUrl(getDeleteEndPoint(event.target.getAttribute("name"),parentname));        
+        setUrl(api.getDeleteEndPoint(event.target.getAttribute("name"),parentname));        
         // setFlow("delete")
+        setParent(parentname);
+    }
+    function handleUnzip(event){
+        setIsUnzipDialogOpen(true);
+        setMessage("Are you sure to unzip " + event.target.getAttribute("name") + "?");
+        setCurrent(event.target.getAttribute("name"));
+        var parentname = event.target.getAttribute("parent");
         setParent(parentname);
     }
 
     const handleDeleteDialogConfirm = async () => {
       setIsDialogOpen(false);
       console.log("Action Confirmed! Perform delete logic here.");
-      const data = await deleteFile(current,parent);
+      const data = await api.deleteFile(current,parent);
       setData(data);
       setList(data.files);
     };
     const handleMoveDialogConfirm = async () => {
       setIsMoveDialogOpen(false);
       console.log("handleMoveDialogConfirm::Action Confirmed! Perform move logic here.");
-      const data = await move(current,targetMoveCopyPath);
+      const data = await api.move(current,targetMoveCopyPath);
       setData(data);
       setList(data.files);
       setFlow("");
@@ -202,14 +199,14 @@ function Explorer(){
     const handleCopyDialogConfirm = async () => {
       setIsCopyDialogOpen(false);
       console.log("Action Confirmed! Perform copy logic here.");
-      const data = await copy(current,targetMoveCopyPath);
+      const data = await api.copy(current,targetMoveCopyPath);
       setData(data);
       setList(data.files);
       setFlow("");
     };
     const handleUploadDialogConfirm = async () => {
       setIsUploadDialogOpen(false);
-      const data = await getDirectory(current);
+      const data = await api.getDirectory(current);
       setData(data);
       setList(data.files);
       setFlow("");
@@ -221,7 +218,7 @@ function Explorer(){
     const handleCreateDialogConfirm = async (name) => {
       setIsCreateDialogOpen(false);
       console.log("Action Confirmed! Perform copy logic here.");
-      const data = await createDirectory(name,current);
+      const data = await api.createDirectory(name,current);
       setData(data);
       setList(data.files);
       setFlow("");
@@ -229,7 +226,7 @@ function Explorer(){
     const handleConvertDialogConfirm = async () => {
       setIsConvertDialogOpen(false);
       console.log("handleConvertDialogConfirm,name=" + current);
-      const data = await convertMtsToMp4(current,parent);
+      const data = await api.convertMtsToMp4(current,parent);
       setData(data);
       setList(data.files);
       setFlow("");
@@ -243,6 +240,15 @@ function Explorer(){
       setIsFileNameDialogOpen(false);
       setIsExistingNotes(false);
       setFlow("notes");
+    };
+    const handleUnzipConfirm = async () => {
+      setIsUnzipDialogOpen(false);
+      const data = await api.unzip(current,targetMoveCopyPath);
+      const folder = data.targetPath;
+      const folder_data = await api.getDirectory(folder);
+      setData(folder_data);
+      setList(folder_data.files);
+      setFlow("");
     };
 
     
@@ -278,11 +284,15 @@ function Explorer(){
       setIsFileNameDialogOpen(false);
       console.log("Action Cancelled.");
     };
+    const onCancelUnzipDialog = () => {
+      setIsUnzipDialogOpen(false);
+      console.log("Action Cancelled.");
+    };
     
     const handlePathSelect = async (path) => {
       console.log("handlePathSelect::" + path);
       setTargetMoveCopyPath(path);
-      const data = await getDirectory(path);
+      const data = await api.getDirectory(path);
       const myOptions = data.files
         .filter(item => item.kind === "folder")
         .map(item => ({value: item.path, label: item.path}));      
@@ -345,7 +355,7 @@ function Explorer(){
           parent={image_data.parent}
           list={image_data.list}
           onExit={handleNavigate}
-          getViewEndPoint={getViewEndPoint}
+          getViewEndPoint={api.getViewEndPoint}
           />
       )
     } else if (flow == "pdf"){
@@ -382,6 +392,7 @@ function Explorer(){
               handleNewNotes={handleNewNotes}
               handleView={handleView}
               handleConvert={handleConvert}
+              handleUnzip={handleUnzip}
               />
             <ConfirmationDialog 
               isOpen={isDialogOpen} 
@@ -442,6 +453,16 @@ function Explorer(){
                 label="Notes Name : "
                 onConfirm={handleNotesNameConfirm}
                 onCancel={onCancelNotesDialog}
+              />             
+            }
+            {isUnzipDialogOpen &&
+              <UnzipDialog
+                title="Unzip a file"
+                message={message}
+                label="Notes Name : "
+                onConfirm={handleUnzipConfirm}
+                onCancel={onCancelUnzipDialog}
+                onPathSelect={handlePathSelect}
               />             
             }
           </div>
