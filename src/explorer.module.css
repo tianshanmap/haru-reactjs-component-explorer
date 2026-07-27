@@ -1,0 +1,21 @@
+.video_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+}
+.video_source {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+.video_button {
+  width: 100%;
+}
+.video_button:hover {
+  background-color: rgb(109, 105, 105);
+  color: white;
+}
